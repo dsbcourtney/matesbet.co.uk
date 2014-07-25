@@ -3,18 +3,22 @@ var express = require("express");
 var logfmt = require("logfmt");
 var jade = require("jade");
 var app = express();
-//app.use(app.router);
 
+var config = {
+	assets_path:'/assets',
+	site_name:'Mates Bet'
+}
 
-//app.set('views', __dirname + '/assets/jade');
-app.set('views', __dirname);
-app.set('view_engine', 'jade');
+app.set('views', __dirname + '/assets/jade');
+app.set('view engine', 'jade');
 
 app.use(logfmt.requestLogger());
+app.use(express.static(__dirname + '/'));
 
 app.get('/', function(req, res) {
-	res.render('index', {title:'Home'});
+	res.render('index', {title:'Home',config:config});
   //res.send('Hello World!');
+  //res.send(__dirname);
 });
 
 var port = Number(process.env.PORT || 5000);
